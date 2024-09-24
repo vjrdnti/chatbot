@@ -29,7 +29,9 @@ jobs:
         MONGO_URI: ${{ secrets.MONGO_URI }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         PORT: ${{ secrets.PORT }}
-      run: npm run dev
-      
+      run: |
+        npm run start &
+        sleep 5
+        npm run test-index
     - name: Clean up
       run: kill $(jobs -p)
