@@ -1,5 +1,7 @@
 // controllers/userController.js
-
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 // Dummy user data (for testing purposes)
 const users = [
   {
@@ -10,11 +12,11 @@ const users = [
 ];
 
 // Login user function
-const loginUser = (req, res) => {
+const loginUser = async (req, res) => {
   const { phoneNumber } = req.body;
 
   // Simulate user lookup
-  const user = users.find((u) => u.phoneNumber === phoneNumber);
+  let user = await User.findOne({ phoneNumber });
 
   if (!user) {
     return res.status(401).json({ message: 'User not found' });
@@ -22,16 +24,16 @@ const loginUser = (req, res) => {
 
   // Return user data with token
   res.json({
-    id: user.id,
+    id: user._id,
     phoneNumber: user.phoneNumber,
     token: user.token, // In reality, generate a JWT token
   });
 };
 
 // Get user profile function (protected)
-const getUser = (req, res) => {
-  const user = users[0]; // Assuming user is authenticated and present in DB
-
+const getUser = async (req, res) => {
+  //console.log(req.rawHeaders[3]);
+  const user = await User.findOne({token: req.rawHeaders[3]});
   res.json({
     id: user.id,
     phoneNumber: user.phoneNumber,

@@ -33,5 +33,3 @@ jobs:
         npm run start &
         sleep 5
         npm run test-index
-    - name: Clean up
-      run: kill $(jobs -p)

@@ -11,6 +11,7 @@ const authMiddleware = (req, res, next) => {
   try {
     // Simulate token verification (In real life, use jwt.verify)
     if (token === 'dummyToken1234567890') {
+      console.log('valid token hai ji');
       next(); // Token is valid
     } else {
       return res.status(401).json({ message: 'Token is not valid' });

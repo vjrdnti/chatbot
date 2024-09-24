@@ -23,12 +23,13 @@ const testLogin = async () => {
 };
 
 // Function to test get user API
-const testGetUser = async (token) => {
+const testGetUser = async (user) => {
   try {
     // Log what you are sending
     console.log('Sending Get User Request...');
     const response = await axios.get(`${BASE_URL}/api/users/me`, {
-      headers: { Authorization: token }, // Add JWT token to the headers
+      headers: { Authorization: user.token }, // Add JWT token to the headers
+      body: JSON.stringify(user),
     });
     console.log('Get User Response:', response.data);
   } catch (err) {
@@ -46,7 +47,7 @@ const runTests = async () => {
   // If login is successful, use the token to test get user API
   if (loginResult && loginResult.token) {
     console.log('Testing Get User...');
-    await testGetUser(loginResult.token);
+    await testGetUser(loginResult);
   } else {
     console.error('Login failed, skipping Get User test.');
   }
