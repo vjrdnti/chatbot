@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",  
+    "test-index": "node index.js", 
+    "test-sequence": "npm run start && npm run test-index"  
   },
   "author": "vjrdnti",
   "license": "ISC",
